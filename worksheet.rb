@@ -36,6 +36,91 @@
 # into this data structure, such as "DR0004"
 # and "3rd Feb 2016" and "RD0022"
 
+# my data structure blueprint
+# [
+#   {
+#       driver_id: "",
+#       date: [0, 0, 0],
+#       cost: 0,
+#       rider_id: "",
+#       rating: 0
+#   }
+# ]
+
+rides_data = [
+    ['DRIVER_ID','DATE','COST','RIDER_ID','RATING'],
+    ['DR0004','3rd Feb 2016','5','RD0022','5'],
+    ['DR0001','3rd Feb 2016','10','RD0003','3'],
+    ['DR0002','3rd Feb 2016','25','RD0073','5'],
+    ['DR0001','3rd Feb 2016','30','RD0015','4'],
+    ['DR0003','4th Feb 2016','5','RD0066','5'],
+    ['DR0004','4th Feb 2016','10','RD0022','4'],
+    ['DR0002','4th Feb 2016','15','RD0013','1'],
+    ['DR0003','5th Feb 2016','50','RD0003','2'],
+    ['DR0002','5th Feb 2016','35','RD0066','3'],
+    ['DR0004','5th Feb 2016','20','RD0073','5'],
+    ['DR0001','5th Feb 2016','45','RD0003','2']
+]
+
+# return an array with integer representation of dates
+def parse_date(date_string)
+  day_month_year = []
+  date_string = date_string.split(" ")
+  day = date_string[0].split("").select { |chr| chr =~ /\d/ }.join.to_i
+  month = date_string[1].downcase
+  year = date_string[2].to_i
+
+  # re-assign month from string to int
+  case month
+  when 'jan'
+    month = 1
+  when 'feb'
+    month = 2
+  when 'mar'
+    month = 3
+  when 'apr'
+    month = 4
+  when 'may'
+    month = 5
+  when 'jun'
+    month = 6
+  when 'jul'
+    month = 7
+  when 'aug'
+    month = 8
+  when 'sep'
+    month = 9
+  when 'oct'
+    month = 10
+  when 'nov'
+    month = 11
+  when 'dec'
+    month = 12
+  end
+
+  return day_month_year << day << month << year
+end
+
+def create_structure(data)
+  array = []
+  headings = data[0].map { |heading| heading.downcase }
+
+  (data.length - 1).times do |index|
+    #skip heading
+    index += 1
+
+    #choose row of data
+    row = data[index]
+
+    #create ride hash
+    ride = Hash[headings[0], row[0], headings[1], parse_date(row[1]), headings[2], row[2].to_i, headings[3], row[3], headings[4], row[4].to_i]
+    array << ride
+  end
+  return array
+end
+
+ride_share_data = create_structure(rides_data)
+pp ride_share_data
 ########################################################
 # Step 4: Total Driver's Earnings and Number of Rides
 
