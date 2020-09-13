@@ -21,6 +21,10 @@
 
 # Copy your list from above, and in this section
 # determine what data structure each layer should have
+  # Layer 1 - Array of ride hashes
+  # Layer 2 - Hash with keys for DRIVER_ID, DATE, COST, RIDER_ID, RATING
+  # Layer 3 - Array of ints for Day, Month, Year
+
 
 ########################################################
 # Step 3: Make the data structure!
