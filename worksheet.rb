@@ -102,7 +102,7 @@ def parse_date(date_string)
 end
 
 def create_structure(data)
-  array = []
+  top_array = []
   headings = data[0].map { |heading| heading.downcase }
 
   (data.length - 1).times do |index|
@@ -114,9 +114,9 @@ def create_structure(data)
 
     #create ride hash
     ride = Hash[headings[0], row[0], headings[1], parse_date(row[1]), headings[2], row[2].to_i, headings[3], row[3], headings[4], row[4].to_i]
-    array << ride
+    top_array << ride
   end
-  return array
+  return top_array
 end
 
 ride_share_data = create_structure(rides_data)
