@@ -36,14 +36,14 @@
 # into this data structure, such as "DR0004"
 # and "3rd Feb 2016" and "RD0022"
 
-# my data structure blueprint
+# data structure blueprint
 # [
 #   {
-#       driver_id: "",
-#       date: [0, 0, 0],
-#       cost: 0,
-#       rider_id: "",
-#       rating: 0
+#       driver_id: str,
+#       date: [int, int, int],
+#       cost: int,
+#       rider_id: str,
+#       rating: int
 #   }
 # ]
 
@@ -103,6 +103,7 @@ end
 
 def create_structure(data)
   top_array = []
+  # create default hash keys based on column headings
   headings = data[0].map { |heading| heading.downcase }
 
   (data.length - 1).times do |index|
@@ -126,7 +127,10 @@ pp ride_share_data
 
 # Use an iteration blocks to print the following answers:
 # - the number of rides each driver has given
+unique_drivers = ride_share_data.uniq { |ride| ride['driver_id'] }
+
 # - the total amount of money each driver has made
+#
 # - the average rating for each driver
 # - Which driver made the most money?
 # - Which driver has the highest average rating?
