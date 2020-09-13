@@ -3,9 +3,18 @@
 
 # In this section of the file, as a series of comments,
 # create a list of the layers you identify.
+  # Layer 1 - Array of ride hashes
+  # Layer 2 - DRIVER_ID, DATE, COST, RIDER_ID, RATING
+  # Layer 3 - Day, Month, Year
+
 # Which layers are nested in each other?
+  # Layer 3 is nested in Date of Layer 2, and Layer 2 is nested in Layer 1
+
 # Which layers of data "have" within it a different layer?
+  # Date of Layer 2
+
 # Which layers are "next" to each other?
+  # All of the column headings
 
 ########################################################
 # Step 2: Assign a data structure to each layer
