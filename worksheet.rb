@@ -101,6 +101,16 @@ def parse_date(date_string)
   return day_month_year << day << month << year
 end
 
+#Should refactor date parser method to use ruby Date.parser - see following:
+# d = Date.parse('3rd Feb 2001')
+#                              #=> #<Date: 2001-02-03 ...>
+# d.year                       #=> 2001
+# d.mon                        #=> 2
+# d.mday                       #=> 3
+# d.wday                       #=> 6
+# d += 1                       #=> #<Date: 2001-02-04 ...>
+# d.strftime('%a %d %b %Y')    #=> "Sun 04 Feb 2001"
+
 def structure_ride_share(data)
   top_array = []
   # create default hash keys based on column headings
