@@ -1,3 +1,4 @@
+require 'date'
 ########################################################
 # Step 1: Establish the layers
 
@@ -65,51 +66,9 @@ rides_data = [
 # return an array with integer representation of dates
 def parse_date(date_string)
   day_month_year = []
-  date_string = date_string.split(" ")
-  day = date_string[0].split("").select { |chr| chr =~ /\d/ }.join.to_i
-  month = date_string[1].downcase
-  year = date_string[2].to_i
-
-  # re-assign month from string to int
-  case month
-  when 'jan'
-    month = 1
-  when 'feb'
-    month = 2
-  when 'mar'
-    month = 3
-  when 'apr'
-    month = 4
-  when 'may'
-    month = 5
-  when 'jun'
-    month = 6
-  when 'jul'
-    month = 7
-  when 'aug'
-    month = 8
-  when 'sep'
-    month = 9
-  when 'oct'
-    month = 10
-  when 'nov'
-    month = 11
-  when 'dec'
-    month = 12
-  end
-
-  return day_month_year << day << month << year
+  d = Date.parse(date_string)
+  return day_month_year << d.mday  <<  d.mon  << d.year
 end
-
-#Should refactor date parser method to use ruby Date.parser - see following:
-# d = Date.parse('3rd Feb 2001')
-#                              #=> #<Date: 2001-02-03 ...>
-# d.year                       #=> 2001
-# d.mon                        #=> 2
-# d.mday                       #=> 3
-# d.wday                       #=> 6
-# d += 1                       #=> #<Date: 2001-02-04 ...>
-# d.strftime('%a %d %b %Y')    #=> "Sun 04 Feb 2001"
 
 def structure_ride_share(data)
   top_array = []
