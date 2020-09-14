@@ -101,10 +101,10 @@ def parse_date(date_string)
   return day_month_year << day << month << year
 end
 
-def create_structure(data)
+def structure_ride_share(data)
   top_array = []
   # create default hash keys based on column headings
-  headings = data[0].map { |heading| heading.downcase }
+  headings = data[0].map { |heading| heading.downcase.to_sym }
 
   (data.length - 1).times do |index|
     #skip heading
@@ -113,24 +113,25 @@ def create_structure(data)
     #choose row of data
     row = data[index]
 
-    #create ride hash
+    #populate ride hashes
     ride = Hash[headings[0], row[0], headings[1], parse_date(row[1]), headings[2], row[2].to_i, headings[3], row[3], headings[4], row[4].to_i]
     top_array << ride
   end
   return top_array
 end
 
-ride_share_data = create_structure(rides_data)
+ride_share_data = structure_ride_share(rides_data)
 pp ride_share_data
 ########################################################
 # Step 4: Total Driver's Earnings and Number of Rides
 
 # Use an iteration blocks to print the following answers:
 # - the number of rides each driver has given
-unique_drivers = ride_share_data.uniq { |ride| ride['driver_id'] }
-
+unique_drivers = ride_share_data.map { |ride_hash| ride_hash[:driver_id] }.uniq
+p unique_drivers
 # - the total amount of money each driver has made
-#
+# Your code here to find that menu item's price
+#     menu.each{ |hash| item_price = hash[:price] if hash.value?(unique_driver) }
 # - the average rating for each driver
 # - Which driver made the most money?
 # - Which driver has the highest average rating?
