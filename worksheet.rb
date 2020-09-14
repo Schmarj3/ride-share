@@ -121,17 +121,61 @@ def structure_ride_share(data)
 end
 
 ride_share_data = structure_ride_share(rides_data)
+#test
 pp ride_share_data
 ########################################################
 # Step 4: Total Driver's Earnings and Number of Rides
 
 # Use an iteration blocks to print the following answers:
+def find_unique_values(value_type, data)
+  unique_values = data.map { |ride_hash| ride_hash[value_type] }.uniq
+  return unique_values
+end
+#test
+pp find_unique_values(:driver_id, ride_share_data)
+
 # - the number of rides each driver has given
-unique_drivers = ride_share_data.map { |ride_hash| ride_hash[:driver_id] }.uniq
-p unique_drivers
+def count_total_rides(id, data)
+  count = data.count { |ride_hash| ride_hash.has_value? id }
+  return count
+end
+#test
+pp count_total_rides('DR0004', ride_share_data)
+
 # - the total amount of money each driver has made
-# Your code here to find that menu item's price
-#     menu.each{ |hash| item_price = hash[:price] if hash.value?(unique_driver) }
+def total_ride_cost(id, data)
+  total_cost = 0
+  data.each{ |ride_hash| total_cost += ride_hash[:cost] if ride_hash.value?(id) }
+  return total_cost
+end
+#test
+pp total_ride_cost('DR0004', ride_share_data)
+
 # - the average rating for each driver
+def calculate_average_rating(id, data)
+  total_rides = count_total_rides(id, data)
+  total_ratings = 0.to_f
+
+  data.each{ |ride_hash| total_ratings += ride_hash[:rating] if ride_hash.value?(id) }
+
+  average = total_ratings / total_rides
+  return average.round(1)
+end
+#test
+pp calculate_average_rating('DR0004', ride_share_data)
+
+driver_summaries = find_unique_values(:driver_id, ride_share_data).map do |driver|
+  {
+      driver_id: driver,
+      total_rides: count_total_rides(driver, ride_share_data),
+      total_cost: total_ride_cost(driver, ride_share_data),
+      average_rating: calculate_average_rating(driver, ride_share_data),
+  }
+end
+#test
+pp driver_summaries
+
 # - Which driver made the most money?
+
+
 # - Which driver has the highest average rating?
