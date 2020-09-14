@@ -186,6 +186,7 @@ end
 pp driver_summaries
 
 # - Which driver made the most money?
-
+p driver_summaries.max { |a_hash, b_hash| a_hash[:total_cost] <=> b_hash[:total_cost] }[:driver_id]
 
 # - Which driver has the highest average rating?
+p driver_summaries.max { |a_hash, b_hash| a_hash[:rating] <=> b_hash[:rating] }[:driver_id]
