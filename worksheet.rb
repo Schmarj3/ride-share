@@ -64,12 +64,17 @@ rides_data = [
 ]
 
 # return an array with integer representation of dates
+def line_break
+  puts '--------------------------------------------------------'
+end
+
 def parse_date(date_string)
   day_month_year = []
   d = Date.parse(date_string)
   return day_month_year << d.mday  <<  d.mon  << d.year
 end
 
+# create the data structure from the blueprint
 def structure_ride_share(data)
   top_array = []
   # create default hash keys based on column headings
@@ -82,7 +87,7 @@ def structure_ride_share(data)
     #choose row of data
     row = data[index]
 
-    #populate ride hashes
+    #populate ride hashes - really long!
     ride = Hash[headings[0], row[0], headings[1], parse_date(row[1]), headings[2], row[2].to_i, headings[3], row[3], headings[4], row[4].to_i]
     top_array << ride
   end
@@ -90,8 +95,11 @@ def structure_ride_share(data)
 end
 
 ride_share_data = structure_ride_share(rides_data)
-#test
+line_break
+puts 'Ride Share Data:'
+line_break
 pp ride_share_data
+
 ########################################################
 # Step 4: Total Driver's Earnings and Number of Rides
 
@@ -100,16 +108,12 @@ def find_unique_values(value_type, data)
   unique_values = data.map { |ride_hash| ride_hash[value_type] }.uniq
   return unique_values
 end
-#test
-pp find_unique_values(:driver_id, ride_share_data)
 
 # - the number of rides each driver has given
 def count_total_rides(id, data)
   count = data.count { |ride_hash| ride_hash.has_value? id }
   return count
 end
-#test
-pp count_total_rides('DR0004', ride_share_data)
 
 # - the total amount of money each driver has made
 def total_ride_cost(id, data)
@@ -117,8 +121,6 @@ def total_ride_cost(id, data)
   data.each{ |ride_hash| total_cost += ride_hash[:cost] if ride_hash.value?(id) }
   return total_cost
 end
-#test
-pp total_ride_cost('DR0004', ride_share_data)
 
 # - the average rating for each driver
 def calculate_average_rating(id, data)
@@ -130,9 +132,10 @@ def calculate_average_rating(id, data)
   average = total_ratings / total_rides
   return average.round(1)
 end
-#test
-pp calculate_average_rating('DR0004', ride_share_data)
 
+line_break
+puts 'Driver Summary:'
+line_break
 driver_summaries = find_unique_values(:driver_id, ride_share_data).map do |driver|
   {
       driver_id: driver,
@@ -145,7 +148,13 @@ end
 pp driver_summaries
 
 # - Which driver made the most money?
+line_break
+puts 'Driver that made the most money:'
+line_break
 p driver_summaries.max { |a_hash, b_hash| a_hash[:total_cost] <=> b_hash[:total_cost] }[:driver_id]
 
 # - Which driver has the highest average rating?
+line_break
+puts 'Driver that has the highest average rating:'
+line_break
 p driver_summaries.max { |a_hash, b_hash| a_hash[:rating] <=> b_hash[:rating] }[:driver_id]
